@@ -47,8 +47,9 @@ public class StudentController {
     }
 
     @GetMapping
-    public Collection<Student> getAllStudent() {
-        return studentService.getAllStudent();
+    public Collection<Student> getAllStudent(@RequestParam(required = false) Integer min,
+                                             @RequestParam(required = false) Integer max) {
+        return studentService.getAllStudent(min, max);
     }
 
 }

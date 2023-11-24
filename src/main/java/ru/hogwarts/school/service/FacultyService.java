@@ -38,7 +38,10 @@ public class FacultyService {
         facultyRepository.deleteById(id);
     }
 
-    public List<Faculty> getAllFaculty() {
+    public Collection<Faculty> getAllFaculty(String color, String name) {
+        if (color != null && !color.isBlank() || name != null && !name.isBlank()) {
+            return facultyRepository.findFacultyByColorContainsIgnoreCaseOrNameContainsIgnoreCase(color, name);
+        }
         return facultyRepository.findAll();
     }
 

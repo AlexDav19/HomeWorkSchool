@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,11 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public List<Student> getAllStudent() {
+    public Collection<Student> getAllStudent(Integer min, Integer max) {
+        if (min != null && max != null) {
+
+            return studentRepository.findByAgeBetween(min, max);
+        }
         return studentRepository.findAll();
     }
 }
