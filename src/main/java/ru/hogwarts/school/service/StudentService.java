@@ -23,7 +23,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student getStudentByAge(Long id) {
+    public Student getStudentById(Long id) {
         return studentRepository.findById(id).get();
     }
 
