@@ -38,7 +38,6 @@ public class StudentService {
 
     public Collection<Student> getAllStudent(Integer min, Integer max) {
         if (min != null && max != null) {
-
             return studentRepository.findByAgeBetween(min, max);
         }
         return studentRepository.findAll();
