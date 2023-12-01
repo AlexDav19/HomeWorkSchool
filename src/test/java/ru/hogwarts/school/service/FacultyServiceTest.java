@@ -2,59 +2,70 @@ package ru.hogwarts.school.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 public class FacultyServiceTest {
 
+    @Mock
+    FacultyRepository facultyRepository;
 
-    FacultyService facultyService = new FacultyService();
+    @InjectMocks
+    FacultyService facultyService;
 
     @Test
-    public void createFaculty_success() {
-        Faculty expected = new Faculty(1L, "Alex", "red");
+    public void createFacultyTest_success() {
+        Faculty expected = new Faculty(1L, "Grif", "Red");
+        when(facultyRepository.save(expected)).thenReturn(expected);
         Faculty actual = facultyService.createFaculty(expected);
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    public void createFaculty_notSuccess() {
-        Faculty expected = new Faculty(2L, "Alex", "red");
-        Faculty actual = facultyService.createFaculty(expected);
-        Assertions.assertNotEquals(expected, actual);
-    }
 
     @Test
-    public void getFaculty_success() {
-        Faculty expected = new Faculty(1L, "Alex", "red");
+    public void getFacultyTest_success() {
+        Faculty expected = new Faculty(1L, "Grif", "Red");
+        when(facultyRepository.findById(1L)).thenReturn(Optional.of(expected));
         facultyService.createFaculty(expected);
         Faculty actual = facultyService.getFaculty(1L);
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void updateFaculty_success() {
-        Faculty expected = new Faculty(1L, "Alex", "red");
-        Faculty student = new Faculty(1L, "Bob", "green");
-        facultyService.createFaculty(student);
+    public void updateFacultyTest_success() {
+        Faculty expected = new Faculty(1L, "Grif", "Red");
+        when(facultyRepository.save(expected)).thenReturn(expected);
         Faculty actual = facultyService.updateFaculty(1L, expected);
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void updateFaculty_notSuccess() {
-        Faculty expected = new Faculty(2L, "Alex", "red");
-        Faculty student = new Faculty(1L, "Bob", "green");
-        facultyService.createFaculty(student);
-        Faculty actual = facultyService.updateFaculty(1L, expected);
-        Assertions.assertNotEquals(expected, actual);
+    public void deleteFacultyTest_success() {
+        Assertions.assertDoesNotThrow(() -> facultyService.deleteFaculty(1L));
     }
 
     @Test
-    public void deleteFaculty_success() {
-        Faculty expected = new Faculty(1L, "Alex", "red");
-        facultyService.createFaculty(expected);
-        Faculty actual = facultyService.deleteFaculty(1L);
+    public void getAllFacultyTest_WithMinAndMax_success() {
+        String color = "red";
+        String name = "Grif";
+        Faculty faculty = new Faculty(1L, "Grif", "Red");
+        Collection<Faculty> expected = new ArrayList<>(List.of(faculty));
+        when(facultyRepository.findFacultyByColorContainsIgnoreCaseOrNameContainsIgnoreCase(color, name))
+                .thenReturn(expected);
+        Collection<Faculty> actual = facultyService.getAllFaculty(color, name);
         Assertions.assertEquals(expected, actual);
-        Assertions.assertNull(facultyService.getFaculty(1L));
     }
 }
