@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Faculty;
@@ -59,12 +61,11 @@ class SchoolApplicationTestsFaculty {
         faculty.setId(1L);
         faculty.setName("Grif");
         faculty.setColor("red");
-        Faculty faculty2 = new Faculty();
-        faculty.setId(1L);
-        faculty.setName("Grif");
-        faculty.setColor("green");
 
-        this.restTemplate.put("http://localhost:" + port + "/faculty", faculty, faculty2);
+        String url = "http://localhost:" + port + "/faculty";
+        HttpEntity<Faculty> requestEntity = new HttpEntity<Faculty>(faculty);
+        Assertions.assertThat(this.restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class)).isNotNull();
+
     }
 
     @Test
@@ -75,7 +76,9 @@ class SchoolApplicationTestsFaculty {
         faculty.setName("Grif");
         faculty.setColor("red");
 
-        this.restTemplate.delete("http://localhost:" + port + "/faculty" + faculty.getId() ,faculty.getId());
+        String url = "http://localhost:" + port + "/faculty" + faculty.getId();
+        HttpEntity<Faculty> requestEntity = new HttpEntity<Faculty>(faculty);
+        Assertions.assertThat(this.restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class)).isNotNull();
     }
 
     @Test

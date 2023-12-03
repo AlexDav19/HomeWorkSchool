@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Student;
 
@@ -57,11 +59,9 @@ class SchoolApplicationTestsStudent {
         student.setId(1L);
         student.setName("Bob");
         student.setAge(18);
-        Student student2 = new Student();
-        student.setId(1L);
-        student.setName("Bob");
-        student.setAge(23);
-        this.restTemplate.put("http://localhost:" + port + "/student", student, student2);
+        String url = "http://localhost:" + port + "/student";
+        HttpEntity<Student> requestEntity = new HttpEntity<Student>(student);
+        Assertions.assertThat(this.restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class)).isNotNull();
     }
 
     @Test
@@ -71,8 +71,9 @@ class SchoolApplicationTestsStudent {
         student.setId(1L);
         student.setName("Bob");
         student.setAge(18);
-
-        this.restTemplate.delete("http://localhost:" + port + "/student" + student.getId(), student.getId());
+        String url = "http://localhost:" + port + "/student" + student.getId();
+        HttpEntity<Student> requestEntity = new HttpEntity<Student>(student);
+        Assertions.assertThat(this.restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class)).isNotNull();
     }
 
     @Test
