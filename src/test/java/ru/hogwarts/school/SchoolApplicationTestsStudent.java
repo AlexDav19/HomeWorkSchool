@@ -35,9 +35,13 @@ class SchoolApplicationTestsStudent {
         student.setName("Bob");
         student.setAge(18);
 
-        Assertions
-                .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student", student, String.class))
-                .isNotNull();
+//        Assertions
+//                .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student", student, String.class))
+//                .isNotNull();
+
+        String expected = student.toStringTest();
+        String actual = this.restTemplate.postForObject("http://localhost:" + port + "/student", student, String.class);
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -47,15 +51,23 @@ class SchoolApplicationTestsStudent {
         student.setName("Bob");
         student.setAge(18);
 
-        Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/" + student.getId()
-                        , String.class))
-                .isNotNull();
+//        Assertions
+//                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/" + student.getId()
+//                        , String.class))
+//                .isNotNull();
+
+        String expected = student.toStringTest();
+        String actual = this.restTemplate.getForObject("http://localhost:" + port + "/student/" + student.getId(), String.class);
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void updateStudentTest() throws Exception {
         Student student = new Student();
+        student.setId(1L);
+        student.setName("Bob");
+        student.setAge(18);
+        Student student2 = new Student();
         student.setId(1L);
         student.setName("Bob");
         student.setAge(18);
@@ -82,5 +94,4 @@ class SchoolApplicationTestsStudent {
                 .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student", String.class))
                 .isNotNull();
     }
-
 }

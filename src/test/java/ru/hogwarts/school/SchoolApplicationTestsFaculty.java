@@ -37,9 +37,13 @@ class SchoolApplicationTestsFaculty {
         faculty.setName("Grif");
         faculty.setColor("red");
 
-        Assertions
-                .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, String.class))
-                .isNotNull();
+//        Assertions
+//                .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, String.class))
+//                .isNotNull();
+
+        String expected = faculty.toFacultyTest();
+        String actual = this.restTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, String.class);
+        org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
     }
 
     @Test
