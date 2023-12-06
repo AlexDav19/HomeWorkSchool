@@ -71,4 +71,30 @@ public class StudentServiceTest {
         Collection<Student> actual = studentService.getAllStudent(min, max);
         Assertions.assertEquals(expected, actual);
     }
+
+    @Test
+    public void getContAllStudentTest_success() {
+        Integer expected = 2;
+        when(studentRepository.getContAllStudent()).thenReturn(expected);
+        Integer actual = studentService.getContAllStudent();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getAVGAgeAllStudentTest_success() {
+        Integer expected = 32;
+        when(studentRepository.getAVGAgeAllStudent()).thenReturn(expected);
+        Integer actual = studentService.getAVGAgeAllStudent();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getFiveLastStudentTest_success() {
+        Student student = new Student(1L, "Nff", 21);
+        List<Student> expected = new ArrayList<>();
+        expected.add(student);
+        when(studentRepository.getFiveLastStudent()).thenReturn(expected);
+        List<Student> actual = studentService.getFiveLastStudent();
+        Assertions.assertEquals(expected, actual);
+    }
 }
