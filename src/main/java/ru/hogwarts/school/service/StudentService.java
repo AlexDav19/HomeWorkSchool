@@ -42,4 +42,16 @@ public class StudentService {
         }
         return studentRepository.findAll();
     }
+
+    public Integer getContAllStudent() {
+        return studentRepository.getContAllStudent();
+    }
+
+    public Integer getAVGAgeAllStudent() {
+        return studentRepository.getAVGAgeAllStudent();
+    }
+
+    public List<Student> getFiveLastStudent() {
+        return studentRepository.getFiveLastStudent();
+    }
 }
