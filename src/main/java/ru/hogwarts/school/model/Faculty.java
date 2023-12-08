@@ -68,4 +68,11 @@ public class Faculty {
                 ", color='" + color + '\'' +
                 '}';
     }
+
+    public String toFacultyTest() {
+        return "{\"id\":" + id +
+                ",\"name\":\"" + name + '\"' +
+                ",\"color\":\"" + color +
+                "\"}";
+    }
 }

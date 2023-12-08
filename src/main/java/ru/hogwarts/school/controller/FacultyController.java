@@ -50,7 +50,7 @@ public class FacultyController {
     }
 
     @GetMapping
-    public Collection<Faculty> getFacultyByAge(@RequestParam(required = false) String color,
+    public Collection<Faculty> getFacultyByColor(@RequestParam(required = false) String color,
                                                @RequestParam(required = false) String name) {
         return facultyService.getAllFaculty(color, name);
     }

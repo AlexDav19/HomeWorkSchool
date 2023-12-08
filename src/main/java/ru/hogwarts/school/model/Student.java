@@ -72,4 +72,11 @@ public class Student {
                 ", age=" + age +
                 '}';
     }
+
+    public String toStringTest() {
+        return "{\"id\":" + id +
+                ",\"name\":\"" + name + '\"' +
+                ",\"age\":" + age +
+                '}';
+    }
 }
