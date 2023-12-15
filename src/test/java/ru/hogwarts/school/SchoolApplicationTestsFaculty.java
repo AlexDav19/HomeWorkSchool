@@ -44,6 +44,11 @@ class SchoolApplicationTestsFaculty {
         String expected = faculty.toFacultyTest();
         String actual = this.restTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, String.class);
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual);
+
+        Faculty expectedFaculty = new Faculty(1L, "Grif", "red");
+        Faculty actualFaculty = this.restTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, Faculty.class);
+        org.junit.jupiter.api.Assertions.assertNotNull(actualFaculty);
+        org.junit.jupiter.api.Assertions.assertEquals(expectedFaculty, actualFaculty);
     }
 
     @Test
