@@ -53,28 +53,38 @@ public class StudentController {
         return studentService.getAllStudent(min, max);
     }
 
-    @GetMapping ("/get-count-all-student")
+    @GetMapping("/get-count-all-student")
     public Integer getCountAllStudent() {
         return studentService.getContAllStudent();
     }
 
-    @GetMapping ("/get-avg-age-student")
+    @GetMapping("/get-avg-age-student")
     public Integer getAVGAgeAllStudent() {
         return studentService.getAVGAgeAllStudent();
     }
 
-    @GetMapping ("/get-five-last-student")
+    @GetMapping("/get-five-last-student")
     public List<Student> getFiveLastStudent() {
         return studentService.getFiveLastStudent();
     }
 
-    @GetMapping ("/get-name-all-student")
+    @GetMapping("/get-name-all-student")
     public List<String> getNameAllStudent() {
         return studentService.getNameAllStudent();
     }
 
-    @GetMapping ("/get-average-age-all-student")
+    @GetMapping("/get-average-age-all-student")
     public double getAverageAgeAllStudent() {
         return studentService.getAverageAgeAllStudent();
+    }
+
+    @GetMapping("/students/print-parallel")
+    public void getNameStudentParallel() {
+        studentService.getNameStudentParallel();
+    }
+
+    @GetMapping("/students/print-synchronized")
+    public void getNameStudentSynchronized() {
+        studentService.getNameStudentSynchronized();
     }
 }
