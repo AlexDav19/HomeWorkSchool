@@ -54,4 +54,14 @@ public class FacultyController {
                                                @RequestParam(required = false) String name) {
         return facultyService.getAllFaculty(color, name);
     }
+
+    @GetMapping  ("/get-long-name-faculty")
+    public String getLongNameFaculty() {
+        return facultyService.getLongNameFaculty();
+    }
+
+    @GetMapping  ("/get-number")
+    public Integer getNumber() {
+        return facultyService.getNumber();
+    }
 }

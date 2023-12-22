@@ -7,11 +7,9 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FacultyService {
@@ -53,4 +51,34 @@ public class FacultyService {
         return facultyRepository.findAll();
     }
 
+    public String getLongNameFaculty() {
+        return facultyRepository.findAll()
+                .stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length)).orElse(null);
+    }
+
+    public Integer getNumber() {
+        long startTime1 = System.currentTimeMillis();
+        int sum1 = Stream.iterate(1, a -> a + 1)
+                .limit(100_000_000)
+                .reduce(0, (a, b) -> a + b);
+        long endTime1 = System.currentTimeMillis();
+        long timeResult1 = endTime1 - startTime1;
+        logger.debug("Time sum1: " + String.valueOf(timeResult1));
+
+        long startTime2 = System.currentTimeMillis();
+        int sum2 = Stream.iterate(1, a -> a + 1)
+                .parallel()
+                .limit(1_000_000)
+                .reduce(0, (a, b) -> a + b);
+        long endTime2 = System.currentTimeMillis();
+        long timeResult2 = endTime2 - startTime2;
+        logger.debug("Time sum2: " + String.valueOf(timeResult2));
+
+        if (timeResult1 < timeResult2) {
+            return sum1;
+        }
+        return sum2;
+    }
 }
