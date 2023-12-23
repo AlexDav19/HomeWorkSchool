@@ -83,17 +83,19 @@ public class StudentService {
     }
 
     public void getNameStudentParallel() {
-        System.out.println(studentRepository.findAll().get(0).getName());
-        System.out.println(studentRepository.findAll().get(1).getName());
+        List<Student> list = studentRepository.findAll();
+
+        System.out.println(list.get(0).getName());
+        System.out.println(list.get(1).getName());
 
         new Thread(() -> {
-            System.out.println(studentRepository.findAll().get(2).getName());
-            System.out.println(studentRepository.findAll().get(3).getName());
+            System.out.println(list.get(2).getName());
+            System.out.println(list.get(3).getName());
         }).start();
 
         new Thread(() -> {
-            System.out.println(studentRepository.findAll().get(4).getName());
-            System.out.println(studentRepository.findAll().get(5).getName());
+            System.out.println(list.get(4).getName());
+            System.out.println(list.get(5).getName());
         }).start();
 
 
