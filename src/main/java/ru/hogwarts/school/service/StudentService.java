@@ -7,8 +7,8 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class StudentService {
@@ -70,7 +70,7 @@ public class StudentService {
                 .map(Student::getName)
                 .map(String::toUpperCase)
                 .sorted()
-                .filter(str ->  str.charAt(0) == 'A')
+                .filter(str -> str.charAt(0) == 'A')
                 .collect(Collectors.toList());
     }
 
@@ -80,5 +80,45 @@ public class StudentService {
                 .mapToInt(Student::getAge)
                 .average()
                 .getAsDouble();
+    }
+
+    public void getNameStudentParallel() {
+        List<Student> list = studentRepository.findAll();
+
+        System.out.println(list.get(0).getName());
+        System.out.println(list.get(1).getName());
+
+        new Thread(() -> {
+            System.out.println(list.get(2).getName());
+            System.out.println(list.get(3).getName());
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(list.get(4).getName());
+            System.out.println(list.get(5).getName());
+        }).start();
+
+
+    }
+
+    public void getNameStudentSynchronized() {
+        getNameStudent(0);
+        getNameStudent(1);
+
+        new Thread(() -> {
+            getNameStudent(2);
+            getNameStudent(3);
+        }).start();
+
+        new Thread(() -> {
+            getNameStudent(4);
+            getNameStudent(5);
+        }).start();
+
+
+    }
+
+    public synchronized void getNameStudent(int index) {
+        System.out.println(studentRepository.findAll().get(index).getName());
     }
 }
